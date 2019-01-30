@@ -16,6 +16,11 @@ class Widgets(QWidget, Ui_Widget):
         self.checkboxGroup.buttonClicked[int].connect(self.setShape)
         self.activeShapeCheckbox.clicked.connect(self.activateShape)
 
+        # slider and radio buttons
+        for i in range(self.radioContainer.count()):
+            self.radioContainer.itemAt(i).widget().toggled.connect(self.setColorChanel)
+        self.slider.valueChanged.connect(self.changeColor)
+
     def setShape(self, value):
         self.activeShape.setShape(value)
 
@@ -29,6 +34,28 @@ class Widgets(QWidget, Ui_Widget):
             sender.setText('=>')
 
         self.checkboxGroup.buttons()[self.activeShape.shape].setChecked(True)
+
+    def setColorChanel(self, value):
+        self.chanels = set() # reset chanels set
+        sender = self.sender()
+        if value:
+            self.chanels.add(sender.text())
+
+    def changeColor(self, value):
+        self.lcd.display(value)
+
+        if 'R' in self.chanels:
+            self.fillColor.setRed(value)
+        if 'G' in self.chanels:
+            self.fillColor.setGreen(value)
+        if 'B' in self.chanels:
+            self.fillColor.setBlue(value)
+
+        self.activeShape.setFillColor(
+            self.fillColor.red(),
+            self.fillColor.green(),
+            self.fillColor.blue())
+
 
 if __name__ == '__main__':
     import sys
