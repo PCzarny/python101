@@ -21,6 +21,11 @@ class Widgets(QWidget, Ui_Widget):
             self.radioContainer.itemAt(i).widget().toggled.connect(self.setColorChanel)
         self.slider.valueChanged.connect(self.changeColor)
 
+        # ComboBox and Spin Box
+        self.radioGroup.clicked.connect(self.setState)
+        self.listRGB.activated[str].connect(self.setChanelCBox)
+        self.spinRGB.valueChanged[int].connect(self.changeColor)
+
     def setShape(self, value):
         self.activeShape.setShape(value)
 
@@ -55,6 +60,20 @@ class Widgets(QWidget, Ui_Widget):
             self.fillColor.red(),
             self.fillColor.green(),
             self.fillColor.blue())
+
+    def setState(self, value):
+        if value:
+            self.listRGB.setEnabled(False)
+            self.spinRGB.setEnabled(False)
+        else:
+            self.listRGB.setEnabled(True)
+            self.spinRGB.setEnabled(True)
+            self.chanels = set()
+            self.chanels.add(self.listRGB.currentText())
+
+    def setChanelCBox(self, value):
+        self.chanels = set()
+        self.chanels.add(value)
 
 
 if __name__ == '__main__':

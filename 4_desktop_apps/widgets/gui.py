@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QCheckBox, QButtonGroup, QVBoxLayout, QHBoxLayout
 from PyQt5.QtWidgets import QSlider, QLCDNumber, QSplitter
 from PyQt5.QtWidgets import QRadioButton, QGroupBox
+from PyQt5.QtWidgets import QComboBox, QSpinBox
 
 class Ui_Widget(object):
     def setupUi(self, Widget):
@@ -55,8 +56,26 @@ class Ui_Widget(object):
         self.radioGroup.setObjectName('Radio')
         self.radioGroup.setCheckable(True)
 
+        # ComboBox and SpinBox
+        self.listRGB = QComboBox(self)
+        for v in ('R', 'G', 'B'):
+            self.listRGB.addItem(v)
+        self.listRGB.setEnabled(False)
+
+        # SpinBox
+        self.spinRGB = QSpinBox()
+        self.spinRGB.setMinimum(0)
+        self.spinRGB.setMaximum(255)
+        self.spinRGB.setEnabled(False)
+
+        comboContainer = QVBoxLayout()
+        comboContainer.addWidget(self.listRGB)
+        comboContainer.addWidget(self.spinRGB)
+
         radioRow = QHBoxLayout()
         radioRow.addWidget(self.radioGroup)
+        radioRow.insertSpacing(1, 25)
+        radioRow.addLayout(comboContainer)
 
         # Main layout
         mainLayout = QVBoxLayout()
