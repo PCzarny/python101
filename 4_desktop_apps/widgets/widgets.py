@@ -26,6 +26,11 @@ class Widgets(QWidget, Ui_Widget):
         self.listRGB.activated[str].connect(self.setChanelCBox)
         self.spinRGB.valueChanged[int].connect(self.changeColor)
 
+        # Push button
+        for btn in self.groupP.buttons():
+            btn.clicked[bool].connect(self.setChanelPBtn)
+        self.groupPBtn.clicked.connect(self.setState)
+
     def setShape(self, value):
         self.activeShape.setShape(value)
 
@@ -74,6 +79,14 @@ class Widgets(QWidget, Ui_Widget):
     def setChanelCBox(self, value):
         self.chanels = set()
         self.chanels.add(value)
+
+    def setChanelPBtn(self, value):
+        sender = self.sender()
+        if value:
+            self.chanels.add(sender.text())
+        elif value in self.chanels:
+            self.chanels.remove(sender.text())
+
 
 
 if __name__ == '__main__':

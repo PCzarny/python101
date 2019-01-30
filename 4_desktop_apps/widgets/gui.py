@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QCheckBox, QButtonGroup, QVBoxLayout, QHBoxLayout
 from PyQt5.QtWidgets import QSlider, QLCDNumber, QSplitter
 from PyQt5.QtWidgets import QRadioButton, QGroupBox
 from PyQt5.QtWidgets import QComboBox, QSpinBox
+from PyQt5.QtWidgets import QPushButton
 
 class Ui_Widget(object):
     def setupUi(self, Widget):
@@ -77,11 +78,28 @@ class Ui_Widget(object):
         radioRow.insertSpacing(1, 25)
         radioRow.addLayout(comboContainer)
 
+        # Push button
+        pushContainer = QHBoxLayout()
+        self.groupP = QButtonGroup()
+        self.groupP.setExclusive(False)
+        for v in ('R', 'G', 'B'):
+            self.btn = QPushButton(v)
+            self.btn.setCheckable(True)
+            self.groupP.addButton(self.btn)
+            pushContainer.addWidget(self.btn)
+
+        self.groupPBtn = QGroupBox('RGB Buttons')
+        self.groupPBtn.setLayout(pushContainer)
+        self.groupPBtn.setObjectName('Push')
+        self.groupPBtn.setCheckable(True)
+        self.groupPBtn.setChecked(False)
+
         # Main layout
         mainLayout = QVBoxLayout()
         mainLayout.addLayout(checkboxContainer)
         mainLayout.addWidget(sliderContainer)
         mainLayout.addLayout(radioRow)
+        mainLayout.addWidget(self.groupPBtn)
 
         self.setLayout(mainLayout)
         self.setWindowTitle('Widgets')
