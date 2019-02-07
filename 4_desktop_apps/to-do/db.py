@@ -64,3 +64,8 @@ def parseTask (task):
 def readData(person):
     tasks = Task.select().where(Task.assigned == person)
     return list(map(parseTask, tasks))
+
+def addTask(person, description):
+    task = Task(description=description, assigned=person, )
+    task.save()
+    return parseTask(task)

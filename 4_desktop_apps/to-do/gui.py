@@ -10,8 +10,12 @@ class Ui_Widget(object):
         self.loginButton = QPushButton('&Login')
         self.endButton = QPushButton('&End')
 
+        self.addButton = QPushButton('&Add')
+        self.addButton.setEnabled(False)
+
         buttonBroup = QHBoxLayout()
         buttonBroup.addWidget(self.loginButton)
+        buttonBroup.addWidget(self.addButton)
         buttonBroup.addWidget(self.endButton)
 
         container = QVBoxLayout(self)

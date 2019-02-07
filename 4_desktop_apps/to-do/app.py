@@ -13,6 +13,7 @@ class Tasks(QWidget, Ui_Widget):
 
         self.loginButton.clicked.connect(self.login)
         self.endButton.clicked.connect(self.end)
+        self.addButton.clicked.connect(self.add)
 
     def login(self):
         login, password, ok = LoginDialog.getCredentials(self)
@@ -32,6 +33,7 @@ class Tasks(QWidget, Ui_Widget):
         model.update(tasks)
         model.layoutChanged.emit()
         self.refresh()
+        self.addButton.setEnabled(True)
 
     def refresh(self):
         self.view.setModel(model)
@@ -41,6 +43,21 @@ class Tasks(QWidget, Ui_Widget):
 
     def end(self):
         self.close()
+
+    def add(self):
+        description, ok = QInputDialog.getMultiLineText(self,
+                                                        'Task description',
+                                                        'What should be done?')
+        if not ok or not description.strip():
+            QMessageBox.critical(self, 'Error', 'Description is required', QMessageBox.Ok)
+            return
+
+        task = db.addTask(self.user, description)
+        model.content.append(task)
+        model.layoutChanged.emit()
+        if len(model.content) == 1:
+            self.refresh()
+
 
 if __name__ == '__main__':
     import sys
