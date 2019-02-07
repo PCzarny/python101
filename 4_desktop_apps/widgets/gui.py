@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QSlider, QLCDNumber, QSplitter
 from PyQt5.QtWidgets import QRadioButton, QGroupBox
 from PyQt5.QtWidgets import QComboBox, QSpinBox
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QLabel, QLineEdit
 
 class Ui_Widget(object):
     def setupUi(self, Widget):
@@ -94,12 +95,32 @@ class Ui_Widget(object):
         self.groupPBtn.setCheckable(True)
         self.groupPBtn.setChecked(False)
 
+        #Labels
+        labelsContainer = QHBoxLayout()
+
+        self.labelR = QLabel('R')
+        self.colorR = QLineEdit('0')
+
+        self.labelG = QLabel('G')
+        self.colorG = QLineEdit('0')
+
+        self.labelB = QLabel('B')
+        self.colorB = QLineEdit('0')
+
+        for v in ('R', 'G', 'B'):
+            label = getattr(self, 'label' + v)
+            color = getattr(self, 'color' + v)
+            labelsContainer.addWidget(label)
+            labelsContainer.addWidget(color)
+            color.setMaxLength(3)
+
         # Main layout
         mainLayout = QVBoxLayout()
         mainLayout.addLayout(checkboxContainer)
         mainLayout.addWidget(sliderContainer)
         mainLayout.addLayout(radioRow)
         mainLayout.addWidget(self.groupPBtn)
+        mainLayout.addLayout(labelsContainer)
 
         self.setLayout(mainLayout)
         self.setWindowTitle('Widgets')

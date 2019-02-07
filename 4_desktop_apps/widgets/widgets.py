@@ -31,6 +31,11 @@ class Widgets(QWidget, Ui_Widget):
             btn.clicked[bool].connect(self.setChanelPBtn)
         self.groupPBtn.clicked.connect(self.setState)
 
+        # QLabel and QEditLine
+        for v in ('R', 'G', 'B'):
+            color = getattr(self, 'color' + v)
+            color.textEdited.connect(self.changeColor)
+
     def setShape(self, value):
         self.activeShape.setShape(value)
 
@@ -52,6 +57,7 @@ class Widgets(QWidget, Ui_Widget):
             self.chanels.add(sender.text())
 
     def changeColor(self, value):
+        value = int(value)
         self.lcd.display(value)
 
         if 'R' in self.chanels:
@@ -65,6 +71,7 @@ class Widgets(QWidget, Ui_Widget):
             self.fillColor.red(),
             self.fillColor.green(),
             self.fillColor.blue())
+        self.info()
 
     def setState(self, value):
         if value:
@@ -86,6 +93,25 @@ class Widgets(QWidget, Ui_Widget):
             self.chanels.add(sender.text())
         elif value in self.chanels:
             self.chanels.remove(sender.text())
+
+    def info(self):
+        fontB = "QWidget { font-weight: bold }"
+        fontN = "QWidget { font-weight: normal }"
+
+        for v in ('R', 'G', 'B'):
+            label = getattr(self, 'label' + v)
+            color = getattr(self, 'color' + v)
+            if v in self.chanels:
+                label.setStyleSheet(fontB)
+                color.setEnabled(True)
+            else:
+                label.setStyleSheet(fontN)
+                color.setEnabled(False)
+
+        self.colorR.setText(str(self.fillColor.red()))
+        self.colorG.setText(str(self.fillColor.green()))
+        self.colorB.setText(str(self.fillColor.blue()))
+
 
 
 
