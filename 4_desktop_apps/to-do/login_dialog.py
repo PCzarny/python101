@@ -15,7 +15,7 @@ class LoginDialog(QDialog):
         self.login = QLineEdit()
         self.password = QLineEdit()
 
-        self.buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Canel, Qt.Horizontal, self)
+        self.buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, Qt.Horizontal, self)
 
         container = QGridLayout(self)
         container.addWidget(QLabel('Login'), 0, 0)
@@ -36,4 +36,4 @@ class LoginDialog(QDialog):
         dialog = LoginDialog(parent)
         dialog.login.setFocus()
         ok = dialog.exec_()
-        return (formatInput(dialog.login), formatInput(dialog.login), ok == QDialog.Accepted)
+        return (formatInput(dialog.login), formatInput(dialog.password), ok == QDialog.Accepted)

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtWidgets import QMessageBox, QInputDialog
 from gui import Ui_Widget
 from login_dialog import LoginDialog
+import db
 
 class Tasks(QWidget, Ui_Widget):
     def __init__(self, parent=None):
@@ -20,6 +21,11 @@ class Tasks(QWidget, Ui_Widget):
         if not login or not password:
             QMessageBox.warning(self, 'Error', 'Empty username or password', QMessageBox.Ok)
             return
+
+        self.user = db.signin(login, password)
+        if self.user is None:
+            QMessageBox.critical(self, 'Error', 'Incorrect pasword', QMessageBox.Ok)
+            return
         QMessageBox.information(self, 'Login data', 'You\'ve entered data' + login + ' ' + password, QMessageBox.Ok)
 
     def end(self):
@@ -29,6 +35,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
+    db.connect()
     window = Tasks()
     window.show()
     window.move(350, 200)
