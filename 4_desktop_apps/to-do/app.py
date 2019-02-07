@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QMessageBox, QInputDialog
 from gui import Ui_Widget
 from login_dialog import LoginDialog
 import db
+from tab_model import TabModel
 
 class Tasks(QWidget, Ui_Widget):
     def __init__(self, parent=None):
@@ -26,7 +27,17 @@ class Tasks(QWidget, Ui_Widget):
         if self.user is None:
             QMessageBox.critical(self, 'Error', 'Incorrect pasword', QMessageBox.Ok)
             return
-        QMessageBox.information(self, 'Login data', 'You\'ve entered data' + login + ' ' + password, QMessageBox.Ok)
+
+        tasks = db.readData(self.user)
+        model.update(tasks)
+        model.layoutChanged.emit()
+        self.refresh()
+
+    def refresh(self):
+        self.view.setModel(model)
+        self.view.hideColumn(0)
+        self.view.horizontalHeader().setStretchLastSection(True)
+        self.view.resizeColumnsToContents()
 
     def end(self):
         self.close()
@@ -36,6 +47,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     db.connect()
+    model = TabModel()
     window = Tasks()
     window.show()
     window.move(350, 200)

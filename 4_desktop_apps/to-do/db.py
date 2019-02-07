@@ -52,3 +52,15 @@ def loadData():
             task.save()
     base.commit()
     base.close()
+
+def parseTask (task):
+    return [
+        task.id,
+        task.description,
+        '{0:%Y-%m-%d %H:%M:%S}'.format(task.date),
+        task.isCompleted,
+        False]
+
+def readData(person):
+    tasks = Task.select().where(Task.assigned == person)
+    return list(map(parseTask, tasks))

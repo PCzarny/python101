@@ -5,7 +5,7 @@ class Ui_Widget(object):
     def setupUi(self, Widget):
         Widget.setObjectName('ToDo')
 
-        self.table = QTableView()
+        self.view = QTableView()
 
         self.loginButton = QPushButton('&Login')
         self.endButton = QPushButton('&End')
@@ -15,7 +15,7 @@ class Ui_Widget(object):
         buttonBroup.addWidget(self.endButton)
 
         container = QVBoxLayout(self)
-        container.addWidget(self.table)
+        container.addWidget(self.view)
         container.addLayout(buttonBroup)
 
         self.setWindowTitle('Todo list')
