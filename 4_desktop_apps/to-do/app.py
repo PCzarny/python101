@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtWidgets import QMessageBox, QInputDialog
 from gui import Ui_Widget
+from login_dialog import LoginDialog
 
 class Tasks(QWidget, Ui_Widget):
     def __init__(self, parent=None):
@@ -12,14 +13,14 @@ class Tasks(QWidget, Ui_Widget):
         self.endButton.clicked.connect(self.end)
 
     def login(self):
-        login, ok = QInputDialog.getText(self, 'Login', 'Enter username:')
-        if ok:
-            password, ok = QInputDialog.getText(self, 'Login', 'Enter password:')
-            if ok:
-                if not login or not password:
-                    QMessageBox.warning(self, 'Error', 'Empty username or password', QMessageBox.Ok)
-                    return
-                QMessageBox.information(self, 'Login data', 'You\'ve entered data', QMessageBox.Ok)
+        login, password, ok = LoginDialog.getCredentials(self)
+        if not ok:
+            return
+
+        if not login or not password:
+            QMessageBox.warning(self, 'Error', 'Empty username or password', QMessageBox.Ok)
+            return
+        QMessageBox.information(self, 'Login data', 'You\'ve entered data' + login + ' ' + password, QMessageBox.Ok)
 
     def end(self):
         self.close()
