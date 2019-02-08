@@ -2,6 +2,7 @@ from peewee import *
 from datetime import datetime
 
 base = SqliteDatabase('adressess.db')
+fields = ['Id', 'Description', 'Add date', 'Is done', 'Remove']
 
 class BaseModel(Model):
 

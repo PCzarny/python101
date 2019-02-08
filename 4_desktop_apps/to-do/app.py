@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     db.connect()
-    model = TabModel()
+    model = TabModel(db.fields)
     window = Tasks()
     window.show()
     window.move(350, 200)
