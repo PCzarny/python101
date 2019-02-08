@@ -13,9 +13,13 @@ class Ui_Widget(object):
         self.addButton = QPushButton('&Add')
         self.addButton.setEnabled(False)
 
+        self.saveButton = QPushButton('&Save')
+        self.saveButton.setEnabled(False)
+
         buttonBroup = QHBoxLayout()
         buttonBroup.addWidget(self.loginButton)
         buttonBroup.addWidget(self.addButton)
+        buttonBroup.addWidget(self.saveButton)
         buttonBroup.addWidget(self.endButton)
 
         container = QVBoxLayout(self)

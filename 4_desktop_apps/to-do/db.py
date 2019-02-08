@@ -70,3 +70,14 @@ def addTask(person, description):
     task = Task(description=description, assigned=person, )
     task.save()
     return parseTask(task)
+
+def saveData(tasks):
+    for i, task in enumerate(tasks):
+        model = Task.select().where(Task.id == task[0]).get()
+        if task[4]:
+            model.delete_instance()
+            del tasks[i]
+        else:
+            model.description = task[1]
+            model.isCompleted = task[3]
+            model.save()

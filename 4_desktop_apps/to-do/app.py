@@ -14,6 +14,7 @@ class Tasks(QWidget, Ui_Widget):
         self.loginButton.clicked.connect(self.login)
         self.endButton.clicked.connect(self.end)
         self.addButton.clicked.connect(self.add)
+        self.saveButton.clicked.connect(self.save)
 
     def login(self):
         login, password, ok = LoginDialog.getCredentials(self)
@@ -33,7 +34,9 @@ class Tasks(QWidget, Ui_Widget):
         model.update(tasks)
         model.layoutChanged.emit()
         self.refresh()
+
         self.addButton.setEnabled(True)
+        self.saveButton.setEnabled(True)
 
     def refresh(self):
         self.view.setModel(model)
@@ -57,6 +60,11 @@ class Tasks(QWidget, Ui_Widget):
         model.layoutChanged.emit()
         if len(model.content) == 1:
             self.refresh()
+
+    def save(self):
+        db.saveData(model.content)
+        model.layoutChanged.emit()
+
 
 
 if __name__ == '__main__':
