@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Quiz Python</title>
+  </head>
+<body>
+  <h1>Quiz Python</h1>
+  <form method="POST">
+    {% for item in questions %}
+      <p>
+        {{ item.question }}
+        <br>
+        <!-- save question number -->
+        {% set no = loop.index0 %}
+
+        {% for answer in item.answers %}
+          <label>
+            <input type="radio" value="{{ answer }}" name="{{ no }}">
+            {{ answer }}
+          </label>
+          <br>
+        {% endfor %}
+      </p>
+    {% endfor %}
+
+    <button type="submit">Check</button>
+  </form>
+</body>
+</html>
