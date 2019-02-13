@@ -4,6 +4,11 @@
   </head>
 <body>
   <h1>Quiz Python</h1>
+  <p>
+    {%for message in get_flashed_messages() %}
+      {{ message }}
+    {% endfor %}
+  </p>
   <form method="POST">
     {% for item in questions %}
       <p>
