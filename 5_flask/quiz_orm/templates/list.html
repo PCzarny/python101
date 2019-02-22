@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% set active_page = "list" %}
+{% block tytul %}Questions list{% endblock%}
+{% block h1 %}Quiz ORM &#8211; question list{% endblock%}
+{% block content %}
+  <ol>
+  <!-- pętla odczytująca kolejne pytania z listy -->
+  {% for q in questions %}
+    <li>
+      <!-- wypisujemy pytanie -->
+      {{ q.question }}
+    </li>
+  {% endfor %}
+  </ol>
+{% endblock %}

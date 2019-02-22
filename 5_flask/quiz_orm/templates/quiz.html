@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% set active_page = "quiz" %}
+{% block tytul %}Questions{% endblock%}
+{% block h1 %}Quiz ORM &#8211; questions{% endblock%}
+{% block content %}
+  <h2>Answer questions:</h2>
+  <form method="POST">
+    {% for q in questions %}
+      <p>
+        {{ q.question }}
+        <br>
+        {% for ans in q.answers %}
+          <label>
+            <input type="radio" value="{{ ans.answer }}" name="{{ q.id }}">
+            {{ ans.answer }}
+          </label>
+          <br>
+        {% endfor %}
+      </p>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-default">Check</button>
+  </form>
+{% endblock %}
