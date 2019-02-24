@@ -4,11 +4,11 @@
 {% block h1 %}Quiz ORM &#8211; question list{% endblock%}
 {% block content %}
   <ol>
-  <!-- pętla odczytująca kolejne pytania z listy -->
   {% for q in questions %}
     <li>
-      <!-- wypisujemy pytanie -->
       {{ q.question }}
+      <a href="{{ url_for('edit', question_id=q.id ) }}" class="btn btn-default">Edit</a>
+      <a href="{{ url_for('delete', question_id=q.id ) }}" class="btn btn-danger">Delete</a>
     </li>
   {% endfor %}
   </ol>

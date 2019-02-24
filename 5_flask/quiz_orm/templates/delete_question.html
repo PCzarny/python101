@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% set active_page = "delete" %}
+{% block title %}Delete{% endblock%}
+{% block h1 %}Quiz ORM &#8211; Delete{% endblock%}
+{% block content %}
+  <form method="POST" action="{{ url_for('delete', question_id=question.id) }}">
+    <!-- wstawiamy id pytania -->
+    <p class="lead">Are you sure, that you want to remove question:</p>
+    <p>{{ question.question }}</p>
+    <button id="btn-delete" type="submit" class="btn btn-danger">Delete</button>
+  </form>
+{% endblock %}

@@ -58,8 +58,55 @@ def add():
         for answer in answers:
             Answer(question_id=question.id, answer=answer)
         flash('Question added: {}'.format(form.question.data))
-        return redirect(url_for('list'))
+        return redirect(url_for('question_list'))
     elif request.method == 'POST':
         flash_errors(form)
 
     return render_template('add.html', form=form, radio=list(form.correct))
+
+def get_or_404(question_id):
+    try:
+        return prefetch(Question().select().where(Question.id == question_id), Answer)[0]
+    except Question.DoesNotExist:
+        abort(404)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.route('/edit/<int:question_id>', methods=['GET', 'POST'])
+def edit(question_id):
+    question = get_or_404(question_id)
+    form = AddForm()
+
+    if form.validate_on_submit():
+        new_answers = form.answers.data
+
+        question.question = form.question.data
+        question.correct = new_answers[int(form.correct.data)]
+        question.save()
+
+        for i, ans in enumerate(question.answers):
+            ans.answer = new_answers[i]
+            ans.save()
+
+        flash('Question updated: {}'.format(form.question.data))
+        return redirect(url_for('question_list'))
+    elif request.method == 'POST':
+        flash_errors(form)
+
+    for i in range(3):
+        if question.correct == question.answers[i].answer:
+            question.correct = i
+            break
+    form = AddForm(obj=question)
+    return render_template('edit.html', form=form, radio=list(form.correct))
+
+@app.route('/delete/<int:question_id>', methods=['GET', 'POST'])
+def delete(question_id):
+    q = get_or_404(question_id)
+    if request.method == 'POST':
+        flash('Question {0} removed'.format(q.question), 'success')
+        q.delete_instance(recursive=True)
+        return redirect(url_for('index'))
+    return render_template('delete_question.html', question=q)

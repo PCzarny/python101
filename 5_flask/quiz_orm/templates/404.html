@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% set active_page = "index" %}
+{% block title %}Error: page not found{% endblock%}
+{% block h1 %}Quiz ORM &#8211; ERROR{% endblock%}
+{% block content %}
+<style type="text/css">
+.error-template {padding: 40px 15px;text-align: center;}
+.error-actions {margin-top:15px;margin-bottom:15px;}
+.error-actions .btn { margin-right:10px; }
+</style>
+<div class="container">
+  <div class="row">
+    <div class="error-template">
+      <h2>404 Page not found</h2>
+      <div class="error-details">
+        Page progagly don't exist.<br>
+      </div>
+      <div class="error-actions">
+        <a href="{{ url_for('index') }}" class="btn btn-primary">
+        <i class="icon-home icon-white"></i> Home page</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
